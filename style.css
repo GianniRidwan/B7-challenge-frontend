@@ -1,0 +1,61 @@
+* {
+    margin: 0px;
+}
+
+#indexbody {
+    background-image: url(background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#startdiv { 
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+#startblok {
+    height: 400px;
+    width: 700px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#starttitel, #titel {
+    text-align: center;
+    margin-top: 45px;
+}
+
+#starttext, #stelling {
+    margin-top: 60px;
+    font-size: 24px;
+    text-align: center;
+}
+
+#titel, #stelling {
+    display: none;
+}
+
+#stelling {
+    font-size: 20px;
+}
+
+#startbutton {
+    margin-top: 80px;
+    padding: 10px 40px 10px 40px;
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: rgb(28, 32, 164);
+    cursor: pointer;
+}
+
+#backbutton {
+    display: none;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
