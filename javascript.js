@@ -71,15 +71,22 @@ skipbutton.addEventListener("click", function() {
 });
 
 function getStatement(){
-    if (i == 4){
+    if (i == 4) {
         eensbutton.style.display = "none";
         gvbbutton.style.display = "none";
         oneensbutton.style.display = "none";
         skipbutton.style.display = "none";
+        titel.innerHTML = "Kies voor jou belangrijke onderwerpen:";
+        subjects.forEach(checkbox);
     } else {
         titel.innerHTML = subjects[i]["title"];
         stelling.innerHTML = subjects[i]["statement"];
     }
     console.log(choices);
     console.log(i);
+};
+
+function checkbox() {
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "checkbox");
 };
