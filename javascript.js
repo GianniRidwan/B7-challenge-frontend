@@ -10,6 +10,7 @@ var gvbbutton = document.getElementById("gvbbutton");
 var oneensbutton = document.getElementById("oneensbutton");
 var skipbutton = document.getElementById("skipbutton");
 
+var choices = [];
 var i = 0;
 
 startbutton.addEventListener("click", function() {
@@ -41,32 +42,44 @@ backbutton.addEventListener("click", function() {
         skipbutton.style.display = "none";
     } else {
         i == i--;
-        titel.innerHTML = subjects[i]["title"];
-        stelling.innerHTML = subjects[i]["statement"];
+        getStatement();
     };
-    
 });
 
 eensbutton.addEventListener("click", function() {
+    choices[i] = "pro";
     i == i++;
-    titel.innerHTML = subjects[i]["title"];
-    stelling.innerHTML = subjects[i]["statement"];
+    getStatement();
 });
 
 gvbbutton.addEventListener("click", function() {
+    choices[i] = "gvb"
     i == i++;
-    titel.innerHTML = subjects[i]["title"];
-    stelling.innerHTML = subjects[i]["statement"];
+    getStatement();
 });
 
 oneensbutton.addEventListener("click", function() {
+    choices[i] = "contra"
     i == i++;
-    titel.innerHTML = subjects[i]["title"];
-    stelling.innerHTML = subjects[i]["statement"];
+    getStatement();
 });
 
 skipbutton.addEventListener("click", function() {
+    choices[i] = "skip"
     i == i++;
-    titel.innerHTML = subjects[i]["title"];
-    stelling.innerHTML = subjects[i]["statement"];
+    getStatement();
 });
+
+function getStatement(){
+    if (i == 4){
+        eensbutton.style.display = "none";
+        gvbbutton.style.display = "none";
+        oneensbutton.style.display = "none";
+        skipbutton.style.display = "none";
+    } else {
+        titel.innerHTML = subjects[i]["title"];
+        stelling.innerHTML = subjects[i]["statement"];
+    }
+    console.log(choices);
+    console.log(i);
+};
