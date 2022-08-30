@@ -34,7 +34,7 @@
     text-align: center;
 }
 
-#titel, #stelling, #eensbutton, #gvbbutton, #oneensbutton, #skipbutton, #questionSelect {
+#titel, #stelling, #eensbutton, #gvbbutton, #oneensbutton, #skipbutton, #questionSelect, #partiesSelect {
     display: none;
 }
 
@@ -88,6 +88,6 @@
     cursor: pointer;
 }
 
-#questionForm, #nextbutton {
+#questionForm, #nextbutton, #partieForm, #btnEnd {
     margin-left: 25px;
 }

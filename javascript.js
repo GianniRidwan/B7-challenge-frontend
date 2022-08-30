@@ -95,7 +95,7 @@ function getStatement() {
 
 function importantQuestions() {
     document.getElementById("questionSelect").style.display = "inline"
-    // document.getElementById("partiesSelect").style.display = "none";
+    document.getElementById("partiesSelect").style.display = "none";
 
     var questionsList = document.getElementById("questionList");
     if (questionsList.innerHTML == "") {
@@ -103,6 +103,21 @@ function importantQuestions() {
         stelling.innerHTML = "Kies voor jou belangrijke onderwerpen:"
         for (var i = 0; i < subjects.length; i++) {
             questionsList.innerHTML += '<label><input type="checkbox" name="' + subjects[i].title + '"> ' + subjects[i].title + '</label><br>';
+        }
+    }
+}
+
+function importantParties() {
+    document.getElementById("btnEnd").style.display = "inline";
+    document.getElementById("partiesSelect").style.display = "inline";
+    document.getElementById("questionSelect").style.display = "none";
+
+    var partiesForm = document.getElementById("partieList");
+    if (partiesForm.innerHTML == "") {
+        titel.innerHTML = "Belangrijke partijen"
+        stelling.innerHTML = "Kies voor jou belangrijke partijen:"
+        for (var i = 0; i < parties.length; i++) {
+            partiesForm.innerHTML += '<label><input type="checkbox" name="' + parties[i].name + '"> ' + parties[i].name + '</label><br>';
         }
     }
 }
