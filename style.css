@@ -88,6 +88,6 @@
     cursor: pointer;
 }
 
-#questionForm, #nextbutton, #partieForm, #btnEnd {
+#questionForm, #nextbutton, #partieForm, #btnEnd, #partieDisplayList {
     margin-left: 25px;
 }

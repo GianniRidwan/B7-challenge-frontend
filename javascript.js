@@ -13,6 +13,9 @@ var questionSelect = document.getElementById("questionSelect");
 
 var choices = [];
 var questions = 0;
+var partieData = [];
+var questionData = [];
+var partiesList = [];
 
 startbutton.addEventListener("click", function () {
     starttitel.style.display = "none";
@@ -119,5 +122,75 @@ function importantParties() {
         for (var i = 0; i < parties.length; i++) {
             partiesForm.innerHTML += '<label><input type="checkbox" name="' + parties[i].name + '"> ' + parties[i].name + '</label><br>';
         }
+    }
+}
+
+
+function calculatePartiePoints() {
+
+    //Get checked boxes from questions form
+    var questionForm = document.getElementById("questionForm").elements;
+    for (var i = 0; i < questionForm.length; i++) {
+        if (questionForm[i].type != "submit") { //dont include submit button
+            questionData[questionForm[i].name] = questionForm[i].checked;
+        }
+    }
+
+
+    //Get checked boxes from parties form
+    var partieForm = document.getElementById("partieForm").elements;
+    for (var i = 0; i < partieForm.length; i++) {
+        if (partieForm[i].type != "submit") { //dont include sumbit button
+            partieData[partieForm[i].name] = partieForm[i].checked;
+        }
+    }
+
+
+    //Generate array with all parties
+    for (var i = 0; i < parties.length; i++) {
+        partiesList[parties[i].name] = 0;
+    }
+
+
+    for (var a = 0; a < subjects.length; a++) { //Loop through questions
+
+        for (var b = 0; b < subjects[a].parties.length; b++) { //Loop through and compare partie positions
+
+            if ((choices[a] == "pro" && subjects[a].parties[b].position == "pro") || (choices[a] == "contra" && subjects[a].parties[b].position == "contra") || (choices[a] == "none" && subjects[a].parties[b].position == "none")) {
+
+                if (questionData[subjects[a].title] == true) {
+                    partiesList[subjects[a].parties[b].name] += 2;
+                } else {
+                    partiesList[subjects[a].parties[b].name] += 1;
+                }
+
+            }
+        }
+
+    }
+}
+
+
+function EndResultScreen() {
+    calculatePartiePoints();
+
+    var partieDisplayList = document.getElementById("partieDisplayList");
+    document.getElementById("btnEnd").style.display = "none";
+    document.getElementById("partiesSelect").style.display = "none";
+    document.getElementById("resultScreen").style.display = "block";
+
+    partieDisplayList.innerHTML = "";
+    titel.innerHTML = "Resultaat:";
+    stelling.innerHTML = "";
+
+    //Convert object to array and sort
+    var arrayPartiesList = [];
+
+    for (var partie in partiesList) {
+        arrayPartiesList.push([partie, partiesList[partie]]);
+    }
+
+    for (partie in arrayPartiesList) {
+        partieDisplayList.innerHTML += "<p>" + arrayPartiesList[partie][0] + "(" + partiesList[arrayPartiesList[partie][0]] + " punten)</p>";
     }
 }
