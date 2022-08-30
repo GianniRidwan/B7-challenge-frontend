@@ -13,7 +13,7 @@ var skipbutton = document.getElementById("skipbutton");
 var choices = [];
 var i = 0;
 
-startbutton.addEventListener("click", function() {
+startbutton.addEventListener("click", function () {
     starttitel.style.display = "none";
     starttext.style.display = "none";
     startbutton.style.display = "none";
@@ -28,8 +28,8 @@ startbutton.addEventListener("click", function() {
     skipbutton.style.display = "block";
 });
 
-backbutton.addEventListener("click", function() {
-    if (i == 0){
+backbutton.addEventListener("click", function () {
+    if (i == 0) {
         starttitel.style.display = "block";
         starttext.style.display = "block";
         startbutton.style.display = "block";
@@ -43,41 +43,45 @@ backbutton.addEventListener("click", function() {
     } else {
         i == i--;
         getStatement();
+        eensbutton.style.display = "block";
+        gvbbutton.style.display = "block";
+        oneensbutton.style.display = "block";
+        skipbutton.style.display = "block";
     };
 });
 
-eensbutton.addEventListener("click", function() {
+eensbutton.addEventListener("click", function () {
     choices[i] = "pro";
     i == i++;
     getStatement();
 });
 
-gvbbutton.addEventListener("click", function() {
+gvbbutton.addEventListener("click", function () {
     choices[i] = "gvb"
     i == i++;
     getStatement();
 });
 
-oneensbutton.addEventListener("click", function() {
+oneensbutton.addEventListener("click", function () {
     choices[i] = "contra"
     i == i++;
     getStatement();
 });
 
-skipbutton.addEventListener("click", function() {
+skipbutton.addEventListener("click", function () {
     choices[i] = "skip"
     i == i++;
     getStatement();
 });
 
-function getStatement(){
+function getStatement() {
     if (i == 4) {
         eensbutton.style.display = "none";
         gvbbutton.style.display = "none";
         oneensbutton.style.display = "none";
         skipbutton.style.display = "none";
         titel.innerHTML = "Kies voor jou belangrijke onderwerpen:";
-        subjects.forEach(checkbox);
+        // subjects.forEach(createCheckboxElement);
     } else {
         titel.innerHTML = subjects[i]["title"];
         stelling.innerHTML = subjects[i]["statement"];
@@ -86,7 +90,30 @@ function getStatement(){
     console.log(i);
 };
 
-function checkbox() {
-    var x = document.createElement("INPUT");
-    x.setAttribute("type", "checkbox");
-};
+// function checkbox() {
+//     var x = document.createElement("INPUT");
+//     x.setAttribute("type", "checkbox");
+//     x.innerHTML = subjects;
+// };
+
+// function createCheckboxElement(arr) {
+//     for (var option of arr) {
+//         var checkboxName = (option.name == null) ? option.title : option.name;
+
+//         var div = document.createElement('div');
+//         div.classList.add("div5");
+//         var checkbox = document.createElement('input');
+//         checkbox.type = "checkbox";
+//         checkbox.name = "cb";
+//         checkbox.value = checkboxName;
+//         checkbox.id = checkboxName;
+
+//         var label = document.createElement('label');
+//         label.htmlFor = checkboxName;
+//         text = document.createTextNode(checkboxName);
+//         label.appendChild(text);
+//         div.appendChild(checkbox);
+//         div.appendChild(label);
+//         checkboxdiv.appendChild(div);
+//     }
+// }
