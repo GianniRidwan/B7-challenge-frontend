@@ -15,7 +15,7 @@
     justify-content: center;
 }
   
-#startblok {
+#startblok, #questionSelect {
     position: relative;
     height: 400px;
     width: 700px;
@@ -34,7 +34,7 @@
     text-align: center;
 }
 
-#titel, #stelling {
+#titel, #stelling, #eensbutton, #gvbbutton, #oneensbutton, #skipbutton, #questionSelect {
     display: none;
 }
 
@@ -50,10 +50,6 @@
     font-size: 20px;
     border-radius: 10px;
     cursor: pointer;
-}
-
-#eensbutton, #gvbbutton, #oneensbutton, #skipbutton {
-    display: none;
 }
 
 #startbutton {
@@ -90,4 +86,8 @@
     height: 50px;
     width: 50px;
     cursor: pointer;
+}
+
+#questionForm, #nextbutton {
+    margin-left: 25px;
 }

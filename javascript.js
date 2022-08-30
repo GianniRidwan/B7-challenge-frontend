@@ -9,9 +9,10 @@ var eensbutton = document.getElementById("eensbutton");
 var gvbbutton = document.getElementById("gvbbutton");
 var oneensbutton = document.getElementById("oneensbutton");
 var skipbutton = document.getElementById("skipbutton");
+var questionSelect = document.getElementById("questionSelect");
 
 var choices = [];
-var i = 0;
+var questions = 0;
 
 startbutton.addEventListener("click", function () {
     starttitel.style.display = "none";
@@ -20,8 +21,8 @@ startbutton.addEventListener("click", function () {
     backbutton.style.display = "block";
     titel.style.display = "block";
     stelling.style.display = "block";
-    titel.innerHTML = subjects[i]["title"];
-    stelling.innerHTML = subjects[i]["statement"];
+    titel.innerHTML = subjects[questions]["title"];
+    stelling.innerHTML = subjects[questions]["statement"];
     eensbutton.style.display = "block";
     gvbbutton.style.display = "block";
     oneensbutton.style.display = "block";
@@ -29,7 +30,7 @@ startbutton.addEventListener("click", function () {
 });
 
 backbutton.addEventListener("click", function () {
-    if (i == 0) {
+    if (questions == 0) {
         starttitel.style.display = "block";
         starttext.style.display = "block";
         startbutton.style.display = "block";
@@ -41,7 +42,7 @@ backbutton.addEventListener("click", function () {
         oneensbutton.style.display = "none";
         skipbutton.style.display = "none";
     } else {
-        i == i--;
+        questions == questions--;
         getStatement();
         eensbutton.style.display = "block";
         gvbbutton.style.display = "block";
@@ -51,69 +52,57 @@ backbutton.addEventListener("click", function () {
 });
 
 eensbutton.addEventListener("click", function () {
-    choices[i] = "pro";
-    i == i++;
+    choices[questions] = "pro";
+    questions == questions++;
     getStatement();
 });
 
 gvbbutton.addEventListener("click", function () {
-    choices[i] = "gvb"
-    i == i++;
+    choices[questions] = "gvb"
+    questions == questions++;
     getStatement();
 });
 
 oneensbutton.addEventListener("click", function () {
-    choices[i] = "contra"
-    i == i++;
+    choices[questions] = "contra"
+    questions == questions++;
     getStatement();
 });
 
 skipbutton.addEventListener("click", function () {
-    choices[i] = "skip"
-    i == i++;
+    choices[questions] = "skip"
+    questions == questions++;
     getStatement();
 });
 
 function getStatement() {
-    if (i == 4) {
+    if (questions == 4) {
         eensbutton.style.display = "none";
         gvbbutton.style.display = "none";
         oneensbutton.style.display = "none";
         skipbutton.style.display = "none";
         titel.innerHTML = "Kies voor jou belangrijke onderwerpen:";
-        // subjects.forEach(createCheckboxElement);
+        importantQuestions();
     } else {
-        titel.innerHTML = subjects[i]["title"];
-        stelling.innerHTML = subjects[i]["statement"];
+        titel.innerHTML = subjects[questions]["title"];
+        stelling.innerHTML = subjects[questions]["statement"];
     }
     console.log(choices);
-    console.log(i);
+    console.log(questions);
 };
 
-// function checkbox() {
-//     var x = document.createElement("INPUT");
-//     x.setAttribute("type", "checkbox");
-//     x.innerHTML = subjects;
-// };
 
-// function createCheckboxElement(arr) {
-//     for (var option of arr) {
-//         var checkboxName = (option.name == null) ? option.title : option.name;
 
-//         var div = document.createElement('div');
-//         div.classList.add("div5");
-//         var checkbox = document.createElement('input');
-//         checkbox.type = "checkbox";
-//         checkbox.name = "cb";
-//         checkbox.value = checkboxName;
-//         checkbox.id = checkboxName;
+function importantQuestions() {
+    document.getElementById("questionSelect").style.display = "inline"
+    // document.getElementById("partiesSelect").style.display = "none";
 
-//         var label = document.createElement('label');
-//         label.htmlFor = checkboxName;
-//         text = document.createTextNode(checkboxName);
-//         label.appendChild(text);
-//         div.appendChild(checkbox);
-//         div.appendChild(label);
-//         checkboxdiv.appendChild(div);
-//     }
-// }
+    var questionsList = document.getElementById("questionList");
+    if (questionsList.innerHTML == "") {
+        titel.innerHTML = "Belangrijke onderwerpen"
+        stelling.innerHTML = "Kies voor jou belangrijke onderwerpen:"
+        for (var i = 0; i < subjects.length; i++) {
+            questionsList.innerHTML += '<label><input type="checkbox" name="' + subjects[i].title + '"> ' + subjects[i].title + '</label><br>';
+        }
+    }
+}
