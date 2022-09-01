@@ -215,6 +215,10 @@ function EndResultScreen() {
     titel.innerHTML = "Resultaat:";
     stelling.innerHTML = "";
 
+    function percentage(partialValue, totalValue) {
+        perc = (100 * partialValue) / totalValue;
+     } 
+
     //Convert object to array and sort
     var arrayPartiesList = [];
 
@@ -223,6 +227,8 @@ function EndResultScreen() {
     }
 
     for (partie in arrayPartiesList) {
-        partieDisplayList.innerHTML += "<p>" + arrayPartiesList[partie][0] + "(" + partiesList[arrayPartiesList[partie][0]] + " punten)</p>";
+        percentage(partiesList[arrayPartiesList[partie][0]], count)
+        console.log(perc)
+        partieDisplayList.innerHTML += "<p>" + arrayPartiesList[partie][0] + " (" + perc + "%)</p>";
     }
 }
