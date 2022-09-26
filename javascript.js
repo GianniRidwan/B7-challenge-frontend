@@ -187,12 +187,14 @@ function calculatePartiePoints() {
     }
 
     count = 0;
+    maxpoints = 4;
     for (var a = 0; a < subjects.length; a++) { //Loop through questions
         for (var b = 0; b < subjects[a].parties.length; b++) { //Loop through and compare partie positions
             if ((choices[a] == "pro" && subjects[a].parties[b].position == "pro") || (choices[a] == "contra" && subjects[a].parties[b].position == "contra") || (choices[a] == "none" && subjects[a].parties[b].position == "none")) {
                 if (questionData[subjects[a].title] == true) {
                     partiesList[subjects[a].parties[b].name] += 2;
                     count+=2;
+                    maxpoints+=1;
                 } else {
                     partiesList[subjects[a].parties[b].name] += 1;
                     count++;
@@ -217,6 +219,7 @@ function EndResultScreen() {
 
     function percentage(partialValue, totalValue) {
         perc = (100 * partialValue) / totalValue;
+        fixedperc = Number.parseFloat(perc).toFixed(2);
      } 
 
     //Convert object to array and sort
@@ -227,8 +230,8 @@ function EndResultScreen() {
     }
 
     for (partie in arrayPartiesList) {
-        percentage(partiesList[arrayPartiesList[partie][0]], count)
-        console.log(perc)
-        partieDisplayList.innerHTML += "<p>" + arrayPartiesList[partie][0] + " (" + perc + "%)</p>";
+        percentage(partiesList[arrayPartiesList[partie][0]], maxpoints)
+        console.log(fixedperc)
+        partieDisplayList.innerHTML += "<p>" + arrayPartiesList[partie][0] + " (" + fixedperc + "%)</p>";
     }
 }
