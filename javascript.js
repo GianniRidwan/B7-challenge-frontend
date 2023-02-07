@@ -10,8 +10,12 @@ var gvbbutton = document.getElementById("gvbbutton");
 var oneensbutton = document.getElementById("oneensbutton");
 var skipbutton = document.getElementById("skipbutton");
 var questionSelect = document.getElementById("questionSelect");
+var questionsList = document.getElementById("questionList");
 var partiesSelect = document.getElementById("partiesSelect");
 var resultScreen = document.getElementById("resultScreen");
+var partiesForm = document.getElementById("partieList");
+var size = document.getElementById("size");
+var secu = document.getElementById("secu");
 
 var choices = [];
 var questions = 0;
@@ -61,7 +65,7 @@ backbutton.addEventListener("click", function () {
         skipbutton.style.display = "none";
     } else {
         questionSelect.style.display = "none";
-        questions == questions--;
+        questions--;
         getStatement();
         eensbutton.style.display = "block";
         gvbbutton.style.display = "block";
@@ -86,28 +90,28 @@ backbutton.addEventListener("click", function () {
 
 eensbutton.addEventListener("click", function () {
     choices[questions] = "pro";
-    questions == questions++;
+    questions++;
     getStatement();
     resetColor();
 });
 
 gvbbutton.addEventListener("click", function () {
     choices[questions] = "gvb"
-    questions == questions++;
+    questions++;
     getStatement();
     resetColor();
 });
 
 oneensbutton.addEventListener("click", function () {
     choices[questions] = "contra"
-    questions == questions++;
+    questions++;
     getStatement();
     resetColor();
 });
 
 skipbutton.addEventListener("click", function () {
     choices[questions] = "skip"
-    questions == questions++;
+    questions++;
     getStatement();
     resetColor();
 });
@@ -120,6 +124,7 @@ function resetColor() {
 };
 
 function getStatement() {
+    questionsList.innerHTML = ""
     if (questions == parties.length) {
         eensbutton.style.display = "none";
         gvbbutton.style.display = "none";
@@ -132,13 +137,13 @@ function getStatement() {
     }
     console.log(choices);
     console.log(questions);
+    console.log(parties.length);
 };
 
 function importantQuestions() {
-    document.getElementById("questionSelect").style.display = "inline"
+    document.getElementById("questionSelect").style.display = "inline";
     document.getElementById("partiesSelect").style.display = "none";
-
-    var questionsList = document.getElementById("questionList");
+    partiesForm.innerHTML = ""
     if (questionsList.innerHTML == "") {
         titel.innerHTML = "Belangrijke onderwerpen"
         stelling.innerHTML = "Kies voor jou belangrijke onderwerpen:"
@@ -153,17 +158,62 @@ function importantParties() {
     document.getElementById("partiesSelect").style.display = "inline";
     document.getElementById("questionSelect").style.display = "none";
 
-    var partiesForm = document.getElementById("partieList");
     if (partiesForm.innerHTML == "") {
         titel.innerHTML = "Belangrijke partijen"
         stelling.innerHTML = "Kies voor jou belangrijke partijen:"
+        size.innerHTML = '<label><input id="checkSize" type="checkbox" name="checkSize" onclick="sizeFunc()"> Alle grote partijen</label><br>'
+        secu.innerHTML = '<label><input id="checkSecu" type="checkbox" name="checkSecu" onclick="secuFunc()"> Alle seculiere partijen</label><br><br>'
         for (var i = 0; i < parties.length; i++) {
-            partiesForm.innerHTML += '<label><input type="checkbox" name="' + parties[i].name + '"> ' + parties[i].name + '</label><br>';
+            partiesForm.innerHTML += '<label><input type="checkbox" id="' + parties[i].name + '" name="' + parties[i].name + '"> ' + parties[i].name + '</label><br>';
         }
     }
 }
 
-function calculatePartiePoints() {
+function sizeFunc() {
+    if (checkSize.checked) {
+        for (var e = 0; e < parties.length; e++) {
+            if (parties[e].size > 9) {
+                var dikke = document.getElementById(parties[e].name);
+                dikke.checked = true;
+            }
+        }
+    } else {
+        for (var e = 0; e < parties.length; e++) {
+            if (parties[e].size > 9) {
+                var baap = document.getElementById(parties[e].name);
+                if (checkSecu.checked) {
+                    baap.checked = true;
+                } else {
+                    baap.checked = false;
+                }
+            }
+        }
+    }
+}
+
+function secuFunc() {
+    if (checkSecu.checked) {
+        for (var o = 0; o < parties.length; o++) {
+            if (parties[o].secular == true) {
+                var natte = document.getElementById(parties[o].name);
+                natte.checked = true;
+            }
+        }
+    } else {
+        for (var o = 0; o < parties.length; o++) {
+            if (parties[o].secular == true) {
+                var visstick = document.getElementById(parties[o].name);
+                if (checkSize.checked) {
+                    visstick.checked = true;
+                } else {
+                    visstick.checked = false;
+                }
+            }
+        }
+    }
+}
+
+function calculatePoints() {
 
     //Get checked boxes from questions form
     var questionForm = document.getElementById("questionForm").elements;
@@ -187,7 +237,7 @@ function calculatePartiePoints() {
     }
 
     count = 0;
-    maxpoints = 4;
+    maxpoints = subjects.length;
     for (var a = 0; a < subjects.length; a++) { //Loop through questions
         for (var b = 0; b < subjects[a].parties.length; b++) { //Loop through and compare partie positions
             if ((choices[a] == "pro" && subjects[a].parties[b].position == "pro") || (choices[a] == "contra" && subjects[a].parties[b].position == "contra") || (choices[a] == "none" && subjects[a].parties[b].position == "none")) {
@@ -205,8 +255,8 @@ function calculatePartiePoints() {
     console.log(count);
 }
 
-function EndResultScreen() {
-    calculatePartiePoints();
+function Result() {
+    calculatePoints();
 
     var partieDisplayList = document.getElementById("partieDisplayList");
     document.getElementById("btnEnd").style.display = "none";
