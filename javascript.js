@@ -173,18 +173,18 @@ function sizeFunc() {
     if (checkSize.checked) {
         for (var e = 0; e < parties.length; e++) {
             if (parties[e].size > 9) {
-                var dikke = document.getElementById(parties[e].name);
-                dikke.checked = true;
+                var dikke_baap = document.getElementById(parties[e].name);
+                dikke_baap.checked = true;
             }
         }
     } else {
         for (var e = 0; e < parties.length; e++) {
             if (parties[e].size > 9) {
-                var baap = document.getElementById(parties[e].name);
+                var vieze_asbak = document.getElementById(parties[e].name);
                 if (checkSecu.checked) {
-                    baap.checked = true;
+                    vieze_asbak.checked = true;
                 } else {
-                    baap.checked = false;
+                    vieze_asbak.checked = false;
                 }
             }
         }
@@ -195,18 +195,18 @@ function secuFunc() {
     if (checkSecu.checked) {
         for (var o = 0; o < parties.length; o++) {
             if (parties[o].secular == true) {
-                var natte = document.getElementById(parties[o].name);
-                natte.checked = true;
+                var natte_visstick = document.getElementById(parties[o].name);
+                natte_visstick.checked = true;
             }
         }
     } else {
         for (var o = 0; o < parties.length; o++) {
             if (parties[o].secular == true) {
-                var visstick = document.getElementById(parties[o].name);
+                var gladde_paling = document.getElementById(parties[o].name);
                 if (checkSize.checked) {
-                    visstick.checked = true;
+                    gladde_paling.checked = true;
                 } else {
-                    visstick.checked = false;
+                    gladde_paling.checked = false;
                 }
             }
         }
