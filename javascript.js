@@ -19,11 +19,20 @@ var secu = document.getElementById("secu");
 
 var choices = [];
 var questions = 0;
+var width = 0;
 var partieData = [];
 var questionData = [];
 var partiesList = [];
 
+function progress(value){
+    // function to print a progress bar
+    var progressline = document.getElementById("progressline");
+    width = width+value;
+    progressline.style.width = (width  ) + "%";    
+}
+
 startbutton.addEventListener("click", function () {
+    // function to start the questions
     starttitel.style.display = "none";
     starttext.style.display = "none";
     startbutton.style.display = "none";
@@ -39,9 +48,11 @@ startbutton.addEventListener("click", function () {
     oneensbutton.style.display = "block";
     skipbutton.style.display = "block";
     resetColor();
+    progress(0);
 });
 
 backbutton.addEventListener("click", function () {
+    // function to go back 1 page for each click
     if (resultScreen.style.display != 'none') {
         resultScreen.style.display = 'none'
         titel.innerHTML = "Belangrijke partijen"
@@ -66,6 +77,7 @@ backbutton.addEventListener("click", function () {
     } else {
         questionSelect.style.display = "none";
         questions--;
+        progress(-3.125);
         getStatement();
         eensbutton.style.display = "block";
         gvbbutton.style.display = "block";
@@ -93,6 +105,7 @@ eensbutton.addEventListener("click", function () {
     questions++;
     getStatement();
     resetColor();
+    progress(3.125);
 });
 
 gvbbutton.addEventListener("click", function () {
@@ -100,6 +113,7 @@ gvbbutton.addEventListener("click", function () {
     questions++;
     getStatement();
     resetColor();
+    progress(3.125);
 });
 
 oneensbutton.addEventListener("click", function () {
@@ -107,6 +121,7 @@ oneensbutton.addEventListener("click", function () {
     questions++;
     getStatement();
     resetColor();
+    progress(3.125);
 });
 
 skipbutton.addEventListener("click", function () {
@@ -114,9 +129,11 @@ skipbutton.addEventListener("click", function () {
     questions++;
     getStatement();
     resetColor();
+    progress(3.125);
 });
 
 function resetColor() {
+    // function to reset the button colors
     eensbutton.style.backgroundColor = 'rgb(34, 160, 17)';
     gvbbutton.style.backgroundColor = 'rgb(195, 194, 194)';
     oneensbutton.style.backgroundColor = 'rgb(248, 4, 4)';
@@ -124,8 +141,9 @@ function resetColor() {
 };
 
 function getStatement() {
+    // function to get a new question
     questionsList.innerHTML = ""
-    if (questions == parties.length) {
+    if (questions == 30) {
         eensbutton.style.display = "none";
         gvbbutton.style.display = "none";
         oneensbutton.style.display = "none";
@@ -135,12 +153,10 @@ function getStatement() {
         titel.innerHTML = subjects[questions]["title"];
         stelling.innerHTML = subjects[questions]["statement"];
     }
-    console.log(choices);
-    console.log(questions);
-    console.log(parties.length);
 };
 
 function importantQuestions() {
+    // function to choose the important questions
     document.getElementById("questionSelect").style.display = "inline";
     document.getElementById("partiesSelect").style.display = "none";
     partiesForm.innerHTML = ""
@@ -154,6 +170,7 @@ function importantQuestions() {
 }
 
 function importantParties() {
+    // function to choose the important parties
     document.getElementById("btnEnd").style.display = "inline";
     document.getElementById("partiesSelect").style.display = "inline";
     document.getElementById("questionSelect").style.display = "none";
@@ -170,6 +187,7 @@ function importantParties() {
 }
 
 function sizeFunc() {
+    // function to select all big parties
     if (checkSize.checked) {
         for (var e = 0; e < parties.length; e++) {
             if (parties[e].size > 9) {
@@ -192,6 +210,7 @@ function sizeFunc() {
 }
 
 function secuFunc() {
+    // function to select all the secular parties
     if (checkSecu.checked) {
         for (var o = 0; o < parties.length; o++) {
             if (parties[o].secular == true) {
@@ -214,32 +233,25 @@ function secuFunc() {
 }
 
 function calculatePoints() {
-
-    //Get checked boxes from questions form
+// function to gather all the points
     var questionForm = document.getElementById("questionForm").elements;
     for (var i = 0; i < questionForm.length; i++) {
-        if (questionForm[i].type != "submit") { //dont include submit button
             questionData[questionForm[i].name] = questionForm[i].checked;
-        }
     }
 
-    //Get checked boxes from parties form
     var partieForm = document.getElementById("partieForm").elements;
     for (var i = 0; i < partieForm.length; i++) {
-        if (partieForm[i].type != "submit") { //dont include sumbit button
             partieData[partieForm[i].name] = partieForm[i].checked;
-        }
     }
 
-    //Generate array with all parties
     for (var i = 0; i < parties.length; i++) {
         partiesList[parties[i].name] = 0;
     }
 
     count = 0;
     maxpoints = subjects.length;
-    for (var a = 0; a < subjects.length; a++) { //Loop through questions
-        for (var b = 0; b < subjects[a].parties.length; b++) { //Loop through and compare partie positions
+    for (var a = 0; a < subjects.length; a++) {
+        for (var b = 0; b < subjects[a].parties.length; b++) {
             if ((choices[a] == "pro" && subjects[a].parties[b].position == "pro") || (choices[a] == "contra" && subjects[a].parties[b].position == "contra") || (choices[a] == "none" && subjects[a].parties[b].position == "none")) {
                 if (questionData[subjects[a].title] == true) {
                     partiesList[subjects[a].parties[b].name] += 2;
@@ -252,10 +264,10 @@ function calculatePoints() {
             }
         }
     }
-    console.log(count);
 }
 
 function Result() {
+    // function to calculate the points to percentage and print on screen
     calculatePoints();
 
     var partieDisplayList = document.getElementById("partieDisplayList");
@@ -272,16 +284,13 @@ function Result() {
         fixedperc = Number.parseFloat(perc).toFixed(2);
      } 
 
-    //Convert object to array and sort
     var arrayPartiesList = [];
-
     for (var partie in partiesList) {
         arrayPartiesList.push([partie, partiesList[partie]]);
     }
 
     for (partie in arrayPartiesList) {
         percentage(partiesList[arrayPartiesList[partie][0]], maxpoints)
-        console.log(fixedperc)
         partieDisplayList.innerHTML += "<p>" + arrayPartiesList[partie][0] + " (" + fixedperc + "%)</p>";
     }
 }

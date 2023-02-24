@@ -87,3 +87,11 @@
 #questionForm, #nextbutton, #partieForm, #btnEnd, #partieDisplayList {
     margin-left: 25px;
 }
+
+.progressline{
+    position: absolute;
+    top: 0px;
+    height: 5px;
+    width: 0%;
+    background-color: blue;
+}
